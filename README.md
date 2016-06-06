@@ -4,9 +4,9 @@
 
 ![q-risotto](q-risotto-logo.png =250px)
 
-The intention was to provide an easy access to apps, objects and its data on a Qlik Sense server to integrate with other systems.
+The intention was to provide an easy access to apps, objects and its data on a Qlik Sense server thru a REST API to integrate with other systems.
 
-The state of this API at the very beginning and highly incomplete, so more or less raw and unground. But see yourself.
+The development state of this API is at the very beginning and highly incomplete, so more or less raw and unground. But see yourself.
 
 ## Endpoints
 

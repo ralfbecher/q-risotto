@@ -1,7 +1,7 @@
 {
     "name": "q-risotto",
     "version": "0.0.1",
-    "description": "Qlik REST In Sense (otto) - a RETSful Engine API wrapper",
+    "description": "Qlik REST In Sense (otto) - a RESTful Engine API wrapper",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
