@@ -25,7 +25,7 @@ See also: [routes.js](./routes/routes.js)
 
 /v1/docs/{docId}/objects/**{objId}** - object layout, returns getLayout().**qLayout**
 
-/v1/docs/{docId}/objects/{objId}/**data** - object data, returns either getHyperCubeData()/getListObjectData().**qDataPages** depending on objectype chart/listbox
+/v1/docs/{docId}/objects/{objId}/**data** - object data, returns either getHyperCubeData()/getListObjectData().**qDataPages** depending on object type chart/listbox
 
 ### Usage
 
