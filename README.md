@@ -2,7 +2,7 @@
 
 ## **Q**lik **R**EST **I**n **S**ense (**otto**) - a RESTful Engine API wrapper
 
-![q-risotto](q-risotto-logo.png =250px)
+![q-risotto](./q-risotto-logo.png =250px)
 
 The intention was to provide an easy access to apps, objects and its data on a Qlik Sense server thru a REST API to integrate with other systems.
 
