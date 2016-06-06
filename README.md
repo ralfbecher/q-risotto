@@ -1,6 +1,6 @@
 # q-risotto
 
-## **Q**lik **R**EST **I**n **S**ense (**otto**) - a RESTful Engine API wrapper
+**Q**lik **R**EST **I**n **S**ense (**otto**) - a RESTful Engine API wrapper
 
 ![q-risotto](./q-risotto-logo.png)
 
@@ -12,15 +12,15 @@ The development state of this API is at the very beginning and highly incomplete
 
 See also: [routes.js](./routes/routes.js)
 
-/v1/**docs** - all docs on server, returns getDocList().**qDocList**
+`/v1/**docs**` - all docs on server, returns getDocList().**qDocList**
 
-/v1/docs/**{docId}** - app layout, returns getAppLayout().**qLayout**
+`/v1/docs/**{docId}**` - app layout, returns getAppLayout().**qLayout**
 
-/v1/docs/{docId}/**objects** - all objects of app, returns getAllInfos().**qInfos**
+`/v1/docs/{docId}/**objects**` - all objects of app, returns getAllInfos().**qInfos**
 
-/v1/docs/{docId}/objects/**{objId}** - object layout, returns getLayout().**qLayout**
+`/v1/docs/{docId}/objects/**{objId}**` - object layout, returns getLayout().**qLayout**
 
-/v1/docs/{docId}/objects/{objId}/**data** - object data, returns either getHyperCubeData()/getListObjectData().**qDataPages** depending on objectype chart/listbox
+`/v1/docs/{docId}/objects/{objId}/**data**` - object data, returns either getHyperCubeData()/getListObjectData().**qDataPages** depending on objectype chart/listbox
 
 ## Author
 
