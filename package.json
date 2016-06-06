@@ -1,0 +1,18 @@
+{
+    "name": "q-risotto",
+    "version": "0.0.1",
+    "description": "Qlik REST In Sense (otto) - a RETSful Engine API wrapper",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Ralf Becher, irregular.bi",
+    "license": "MIT",
+    "dependencies": {
+        "fs": "0.0.2",
+        "hapi": "^13.4.1",
+        "path": "^0.12.7",
+        "qsocks": "^2.2.11",
+        "require-hapiroutes": "^0.1.9"
+    }
+}
