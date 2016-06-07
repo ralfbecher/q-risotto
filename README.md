@@ -17,15 +17,19 @@ The development state of this API is at the very beginning and highly incomplete
 
 See also: [routes.js](./routes/routes.js)
 
-/v1/**docs** - all docs on server, returns getDocList().**qDocList**
+GET /v1/**docs** - all docs on server, returns getDocList().**qDocList**
 
-/v1/docs/**{docId}** - app layout, returns getAppLayout().**qLayout**
+GET /v1/docs/**{docId}** - app layout, returns getAppLayout().**qLayout**
 
-/v1/docs/{docId}/**objects** - all objects of app, returns getAllInfos().**qInfos**
+GET /v1/docs/{docId}/**objects** - all objects of app, returns getAllInfos().**qInfos**
 
-/v1/docs/{docId}/objects/**{objId}** - object layout, returns getLayout().**qLayout**
+GET /v1/docs/{docId}/objects/**{objId}** - object layout, returns getLayout().**qLayout**
 
-/v1/docs/{docId}/objects/{objId}/**data** - object data, returns either getHyperCubeData()/getListObjectData().**qDataPages** depending on object type chart/listbox
+GET /v1/docs/{docId}/objects/{objId}/**layout** - layout data, returns getLayout().**qLayout** depending on object type it contains qHyperCube and qDataPages
+
+GET /v1/docs/{docId}/objects/{objId}/**data** - object data, returns either getLayout().qHyperCube/getListObjectData().**qDataPages** depending on object type chart/listbox, not data for pivot tables
+
+GET /v1/docs/{docId}/objects/{objId}/**pivotdata** - object data, returns either getHyperCubeData()/getListObjectData().**qPivotDataPages** for pivot tables
 
 ### Usage
 

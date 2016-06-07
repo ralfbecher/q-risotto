@@ -23,14 +23,15 @@ const engineconfig = {
 module.exports.routes = [
     {
         method: 'GET',
-        path: '/v1',
+        path: '/',
         handler: function (request, reply) {
             reply({
                 name: pjson.name,
                 version: pjson.version,
                 description: pjson.description,
                 author: pjson.author,
-                license: pjson.license
+                license: pjson.license,
+                state: 'cooking'
             });
         }
     },
@@ -51,7 +52,7 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}',
         handler: function (request, reply) {
-            console.log("openDoc", request.params.docId);
+            console.log("doc", request.params.docId);
             qsocks.Connect(engineconfig).then(function (global) {
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
@@ -67,7 +68,7 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}/objects',
         handler: function (request, reply) {
-            console.log("openDoc", request.params.docId);
+            console.log("doc", request.params.docId);
             qsocks.Connect(engineconfig).then(function (global) {
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
@@ -83,20 +84,20 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}/objects/{objId}',
         handler: function (request, reply) {
-            console.log("openDoc", request.params.docId, "getObject", request.params.objId);
+            console.log("doc", request.params.docId, "object", request.params.objId);
             qsocks.Connect(engineconfig).then(function (global) {
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
                 return doc.getObject(request.params.objId);
             }).then(function (object) {
                 if (object) {
-                    return object.getLayout();
+                    return object.getProperties();
                 } else {
                     reply({});
                 }
-            }).then(function (layout) {
+            }).then(function (props) {
                 reply({
-                    qLayout: layout
+                    qProp: props
                 });
             });
         }
@@ -105,22 +106,15 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}/objects/{objId}/data',
         handler: function (request, reply) {
-            console.log("openDoc", request.params.docId, "getObject", request.params.objId, "data");
+            console.log("doc", request.params.docId, "object", request.params.objId, "data");
             qsocks.Connect(engineconfig).then(function (global) {
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
                 return doc.getObject(request.params.objId);
             }).then(function (object) {
-                console.log(object);
                 return object.getLayout().then(function (layout) {
-                    console.log(layout);
                     if (layout.hasOwnProperty('qHyperCube')) {
-                        return object.getHyperCubeData("/qHyperCubeDef", [{
-                            "qTop": 0,
-                            "qLeft": 0,
-                            "qWidth": layout.qHyperCube.qSize.qcx,
-                            "qHeight": layout.qHyperCube.qSize.qcy
-                        }]);
+                        return layout.qHyperCube.qDataPages;
                     } else if (layout.hasOwnProperty('qListObject')) {
                         return object.getListObjectData("/qListObjectDef", [{
                             "qTop": 0,
@@ -135,6 +129,52 @@ module.exports.routes = [
             }).then(function (data) {
                 reply({
                     qDataPages: data
+                });
+            });
+        }
+    },
+    {
+        method: 'GET',
+        path: '/v1/docs/{docId}/objects/{objId}/pivotdata',
+        handler: function (request, reply) {
+            console.log("doc", request.params.docId, "object", request.params.objId, "pivotdata");
+            qsocks.Connect(engineconfig).then(function (global) {
+                return global.openDoc(request.params.docId);
+            }).then(function (doc) {
+                return doc.getObject(request.params.objId);
+            }).then(function (object) {
+                return object.getLayout().then(function (layout) {
+                    if (layout.hasOwnProperty('qHyperCube')) {
+                        if (layout.qHyperCube.hasOwnProperty('qPivotDataPages')) {
+                            return layout.qHyperCube.qPivotDataPages;
+                        } else {
+                            return [];
+                        }
+                    } else {
+                        return [];
+                    }
+                })
+            }).then(function (data) {
+                reply({
+                    qPivotDataPages: data
+                });
+            });
+        }
+    },
+    {
+        method: 'GET',
+        path: '/v1/docs/{docId}/objects/{objId}/layout',
+        handler: function (request, reply) {
+            console.log("doc", request.params.docId, "object", request.params.objId, "layout");
+            qsocks.Connect(engineconfig).then(function (global) {
+                return global.openDoc(request.params.docId);
+            }).then(function (doc) {
+                return doc.getObject(request.params.objId);
+            }).then(function (object) {
+                return object.getLayout().then(function (layout) {})
+            }).then(function (layout) {
+                reply({
+                    qLayout: layout
                 });
             });
         }
