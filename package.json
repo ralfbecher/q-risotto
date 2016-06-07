@@ -1,6 +1,6 @@
 {
     "name": "q-risotto",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Qlik REST In Sense (otto) - a RESTful Engine API wrapper",
     "main": "index.js",
     "scripts": {

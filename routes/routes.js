@@ -25,13 +25,25 @@ module.exports.routes = [
         method: 'GET',
         path: '/',
         handler: function (request, reply) {
-            reply({
-                name: pjson.name,
-                version: pjson.version,
-                description: pjson.description,
-                author: pjson.author,
-                license: pjson.license,
-                state: 'cooking'
+            var _qtproduct = '',
+                _global = {};
+            qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
+                return global.qTProduct();
+            }).then(function (prod) {
+                _qtproduct = prod;
+                return _global.productVersion();
+            }).then(function (vers) {
+                reply({
+                    name: pjson.name,
+                    version: pjson.version,
+                    description: pjson.description,
+                    author: pjson.author,
+                    license: pjson.license,
+                    qtProduct: _qtproduct,
+                    qtVersion: vers,
+                    state: 'cooking'
+                });
             });
         }
     },
