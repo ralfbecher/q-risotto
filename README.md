@@ -29,7 +29,7 @@ GET /v1/docs/{docId}/objects/{objId}/**layout** - layout data, returns getLayout
 
 GET /v1/docs/{docId}/objects/{objId}/**data** - object data, returns either getLayout().qHyperCube/getListObjectData().**qDataPages** depending on object type chart/listbox, not data for pivot tables
 
-GET /v1/docs/{docId}/objects/{objId}/**pivotdata** - object data, returns either getHyperCubeData()/getListObjectData().**qPivotDataPages** for pivot tables
+GET /v1/docs/{docId}/objects/{objId}/**pivotdata** - object data, returns getLayout().**qPivotDataPages** for pivot tables
 
 ### Usage
 
