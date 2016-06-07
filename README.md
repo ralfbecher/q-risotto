@@ -31,6 +31,8 @@ GET /v1/docs/{docId}/objects/{objId}/**data** - object data, returns either getL
 
 GET /v1/docs/{docId}/objects/{objId}/**pivotdata** - object data, returns getLayout().**qPivotDataPages** for pivot tables
 
+GET /v1/docs/{docId}/objects/{objId}/**layers** - object data, returns getLayout().**layers** for maps
+
 ### Usage
 
 See [config.js](./config.js) for configurations.

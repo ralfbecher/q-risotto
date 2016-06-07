@@ -163,6 +163,30 @@ module.exports.routes = [
     },
     {
         method: 'GET',
+        path: '/v1/docs/{docId}/objects/{objId}/layers',
+        handler: function (request, reply) {
+            console.log("doc", request.params.docId, "object", request.params.objId, "layers");
+            qsocks.Connect(engineconfig).then(function (global) {
+                return global.openDoc(request.params.docId);
+            }).then(function (doc) {
+                return doc.getObject(request.params.objId);
+            }).then(function (object) {
+                return object.getLayout().then(function (layout) {
+                    if (layout.hasOwnProperty('layers')) {
+                        return layout.layers;
+                    } else {
+                        return [];
+                    }
+                })
+            }).then(function (layers) {
+                reply({
+                    layers: layers
+                });
+            });
+        }
+    },
+    {
+        method: 'GET',
         path: '/v1/docs/{docId}/objects/{objId}/layout',
         handler: function (request, reply) {
             console.log("doc", request.params.docId, "object", request.params.objId, "layout");
@@ -171,7 +195,7 @@ module.exports.routes = [
             }).then(function (doc) {
                 return doc.getObject(request.params.objId);
             }).then(function (object) {
-                return object.getLayout().then(function (layout) {})
+                return object.getLayout();
             }).then(function (layout) {
                 reply({
                     qLayout: layout
