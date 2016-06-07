@@ -4,9 +4,7 @@ const qsocks = require('qsocks');
 const path = require('path');
 const fs = require('fs');
 
-
 const hostname = new Buffer(fs.readFileSync(path.resolve(config.hostfile)).toString(), 'base64').toString()
-
 
 const engineconfig = {
     host: hostname,
@@ -34,6 +32,7 @@ module.exports.routes = [
                 _qtproduct = prod;
                 return _global.productVersion();
             }).then(function (vers) {
+                _global.connection.ws.terminate();
                 reply({
                     name: pjson.name,
                     version: pjson.version,
@@ -51,9 +50,12 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs',
         handler: function (request, reply) {
+            var _global = {};
             qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
                 return global.getDocList();
             }).then(function (list) {
+                _global.connection.ws.terminate();
                 reply({
                     qDocList: list
                 });
@@ -64,12 +66,15 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}',
         handler: function (request, reply) {
+            var _global = {};
             console.log("doc", request.params.docId);
             qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
                 return doc.getAppLayout();
             }).then(function (layout) {
+                _global.connection.ws.terminate();
                 reply({
                     qLayout: layout
                 });
@@ -80,12 +85,15 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}/objects',
         handler: function (request, reply) {
+            var _global = {};
             console.log("doc", request.params.docId);
             qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
                 return doc.getAllInfos();
             }).then(function (infos) {
+                _global.connection.ws.terminate();
                 reply({
                     qInfos: infos.qInfos
                 });
@@ -96,8 +104,10 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}/objects/{objId}',
         handler: function (request, reply) {
+            var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId);
             qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
                 return doc.getObject(request.params.objId);
@@ -105,9 +115,11 @@ module.exports.routes = [
                 if (object) {
                     return object.getProperties();
                 } else {
+                    _global.connection.ws.terminate();
                     reply({});
                 }
             }).then(function (props) {
+                _global.connection.ws.terminate();
                 reply({
                     qProp: props
                 });
@@ -118,8 +130,10 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}/objects/{objId}/data',
         handler: function (request, reply) {
+            var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "data");
             qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
                 return doc.getObject(request.params.objId);
@@ -135,10 +149,12 @@ module.exports.routes = [
                             "qHeight": layout.qListObject.qSize.qcy
                         }]);
                     } else {
+                        _global.connection.ws.terminate();
                         reply({});
                     }
                 })
             }).then(function (data) {
+                _global.connection.ws.terminate();
                 reply({
                     qDataPages: data
                 });
@@ -149,8 +165,10 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}/objects/{objId}/pivotdata',
         handler: function (request, reply) {
+            var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "pivotdata");
             qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
                 return doc.getObject(request.params.objId);
@@ -167,6 +185,7 @@ module.exports.routes = [
                     }
                 })
             }).then(function (data) {
+                _global.connection.ws.terminate();
                 reply({
                     qPivotDataPages: data
                 });
@@ -177,8 +196,10 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}/objects/{objId}/layers',
         handler: function (request, reply) {
+            var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "layers");
             qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
                 return doc.getObject(request.params.objId);
@@ -191,6 +212,7 @@ module.exports.routes = [
                     }
                 })
             }).then(function (layers) {
+                _global.connection.ws.terminate();
                 reply({
                     layers: layers
                 });
@@ -201,14 +223,17 @@ module.exports.routes = [
         method: 'GET',
         path: '/v1/docs/{docId}/objects/{objId}/layout',
         handler: function (request, reply) {
+            var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "layout");
             qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
                 return doc.getObject(request.params.objId);
             }).then(function (object) {
                 return object.getLayout();
             }).then(function (layout) {
+                _global.connection.ws.terminate();
                 reply({
                     qLayout: layout
                 });
