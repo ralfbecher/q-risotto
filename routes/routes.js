@@ -102,7 +102,7 @@ module.exports.routes = [
     },
     {
         method: 'GET',
-        path: '/v1/docs/{docId}/objects/{objId}',
+        path: '/v1/docs/{docId}/object/{objId}',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId);
@@ -128,7 +128,7 @@ module.exports.routes = [
     },
     {
         method: 'GET',
-        path: '/v1/docs/{docId}/objects/{objId}/data',
+        path: '/v1/docs/{docId}/object/{objId}/data',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "data");
@@ -140,7 +140,7 @@ module.exports.routes = [
             }).then(function (object) {
                 return object.getLayout().then(function (layout) {
                     if (layout.hasOwnProperty('qHyperCube')) {
-                        return layout.qHyperCube.qDataPages;
+                        return layout.qHyperCube;
                     } else if (layout.hasOwnProperty('qListObject')) {
                         return object.getListObjectData("/qListObjectDef", [{
                             "qTop": 0,
@@ -155,15 +155,54 @@ module.exports.routes = [
                 })
             }).then(function (data) {
                 _global.connection.ws.terminate();
+                if (data.hasOwnProperty('qDataPages')) {
+                    reply({
+                        qHyperCube: data
+                    });
+                } else {
+                    reply({
+                        qListObject: data
+                    });
+                }
+            });
+        }
+    },
+    {
+        method: 'POST',
+        path: '/v1/docs/{docId}/hypercube',
+        handler: function (request, reply) {
+            var _global = {};
+            console.log("doc", request.params.docId, "hypercube");
+            qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
+                return global.openDoc(request.params.docId);
+            }).then(function (doc) {
+                return doc.createSessionObject({
+                    qInfo: {
+                        qType: 'qrisotto'
+                    },
+                    qHyperCubeDef: request.payload
+                })
+            }).then(function (cube) {
+                return cube.getLayout().then(function (layout) {
+                    if (layout.hasOwnProperty('qHyperCube')) {
+                        return layout.qHyperCube;
+                    } else {
+                        _global.connection.ws.terminate();
+                        reply({});
+                    }
+                })
+            }).then(function (data) {
+                _global.connection.ws.terminate();
                 reply({
-                    qDataPages: data
+                    qHyperCube: data
                 });
             });
         }
     },
     {
         method: 'GET',
-        path: '/v1/docs/{docId}/objects/{objId}/pivotdata',
+        path: '/v1/docs/{docId}/object/{objId}/pivotdata',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "pivotdata");
@@ -191,10 +230,10 @@ module.exports.routes = [
                 });
             });
         }
-    },
+            },
     {
         method: 'GET',
-        path: '/v1/docs/{docId}/objects/{objId}/layers',
+        path: '/v1/docs/{docId}/object/{objId}/layers',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "layers");
@@ -218,10 +257,10 @@ module.exports.routes = [
                 });
             });
         }
-    },
+            },
     {
         method: 'GET',
-        path: '/v1/docs/{docId}/objects/{objId}/layout',
+        path: '/v1/docs/{docId}/object/{objId}/layout',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "layout");
@@ -239,5 +278,5 @@ module.exports.routes = [
                 });
             });
         }
-    }
-];
+            }
+            ];

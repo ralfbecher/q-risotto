@@ -23,15 +23,17 @@ GET /v1/docs/**{docId}** - app layout, returns getAppLayout().**qLayout**
 
 GET /v1/docs/{docId}/**objects** - all objects of app, returns getAllInfos().**qInfos**
 
-GET /v1/docs/{docId}/objects/**{objId}** - object layout, returns getLayout().**qLayout**
+GET /v1/docs/{docId}/object/**{objId}** - object layout, returns getLayout().**qLayout**
 
-GET /v1/docs/{docId}/objects/{objId}/**layout** - layout data, returns getLayout().**qLayout** depending on object type it contains qHyperCube and qDataPages
+GET /v1/docs/{docId}/object/{objId}/**layout** - layout data, returns getLayout().**qLayout** depending on object type it contains qHyperCube and qDataPages
 
-GET /v1/docs/{docId}/objects/{objId}/**data** - object data, returns either getLayout().qHyperCube/getListObjectData().**qDataPages** depending on object type chart/listbox, not data for pivot tables
+GET /v1/docs/{docId}/object/{objId}/**data** - object data, returns either getLayout().**qHyperCube/qListObject** depending on object type chart/listbox, not data for pivot tables
 
-GET /v1/docs/{docId}/objects/{objId}/**pivotdata** - object data, returns getLayout().**qPivotDataPages** for pivot tables
+GET /v1/docs/{docId}/object/{objId}/**pivotdata** - object data, returns getLayout().**qPivotDataPages** for pivot tables
 
-GET /v1/docs/{docId}/objects/{objId}/**layers** - object data, returns getLayout().**layers** for maps
+GET /v1/docs/{docId}/object/{objId}/**layers** - object data, returns getLayout().**layers** for maps
+
+POST /v1/docs/{docId}/**hypercube** - give a qHyperCubeDef JSON as payload and get back the evaluated getLayout().**qHyperCube**
 
 ### Usage
 
