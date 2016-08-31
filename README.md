@@ -33,7 +33,9 @@ GET /v1/docs/{docId}/object/{objId}/**pivotdata** - object data, returns getLayo
 
 GET /v1/docs/{docId}/object/{objId}/**layers** - object data, returns getLayout().**layers** for maps
 
-POST /v1/docs/{docId}/**hypercube** - give a qHyperCubeDef JSON as payload and get back the evaluated getLayout().**qHyperCube**
+POST /v1/docs/{docId}/**hypercube** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().**qHyperCube**
+
+POST /v1/docs/{docId}/hypercube/**json** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().qHyperCube transformed into a JSON collection of data rows (eg. easy to use with Qlik REST Connector)
 
 ### Usage
 

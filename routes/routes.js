@@ -192,15 +192,91 @@ module.exports.routes = [
                         reply({});
                     }
                 })
-            }).then(function (data) {
+            }).then(function (cube) {
                 _global.connection.ws.terminate();
                 reply({
-                    qHyperCube: data
+                    qHyperCube: cube
                 });
             });
         }
     },
     {
+        method: 'POST',
+        path: '/v1/docs/{docId}/hypercube/json',
+        handler: function (request, reply) {
+            var _global = {};
+            console.log("doc", request.params.docId, "hypercube/json");
+            qsocks.Connect(engineconfig).then(function (global) {
+                _global = global;
+                return global.openDoc(request.params.docId);
+            }).then(function (doc) {
+                return doc.createSessionObject({
+                    qInfo: {
+                        qType: 'qrisotto'
+                    },
+                    qHyperCubeDef: request.payload
+                })
+            }).then(function (cube) {
+                return cube.getLayout().then(function (layout) {
+                    if (layout.hasOwnProperty('qHyperCube')) {
+                        return layout.qHyperCube;
+                    } else {
+                        _global.connection.ws.terminate();
+                        reply([]);
+                    }
+                })
+            }).then(function (cube) {
+                _global.connection.ws.terminate();
+                var fieldNames = [],
+                    fieldTypes = [],
+                    measureTypesMap = {
+                        "U": "D",
+                        "A": "D",
+                        "I": "N",
+                        "R": "N",
+                        "F": "N",
+                        "M": "N",
+                        "D": "T",
+                        "T": "T",
+                        "TS": "T",
+                        "IV": "D"
+                    },
+                    res = [];
+                if (cube.hasOwnProperty('qDimensionInfo')) {
+                    cube.qDimensionInfo.forEach(function (dim) {
+                        fieldNames.push(dim.qFallbackTitle);
+                        fieldTypes.push(dim.qDimensionType); //D for discrete (String), N for numeric (Double), T for Time (Timestamp)
+                    });
+                }
+                if (cube.hasOwnProperty('qMeasureInfo')) {
+                    cube.qMeasureInfo.forEach(function (measure) {
+                        fieldNames.push(measure.qFallbackTitle);
+                        fieldTypes.push(measureTypesMap[measure.qNumFormat.qType]);
+                    });
+                }
+                cube.qDataPages.forEach(function (dataPage) {
+                    dataPage.qMatrix.forEach(function (row) {
+                        var resVal = {};
+                        row.forEach(function (value, i) {
+                            if (value.hasOwnProperty('qIsNull') && value.qIsNull) {
+                                resVal[fieldNames[i]] = null;
+                            } else {
+                                if (fieldTypes[i] == "D") {
+                                    resVal[fieldNames[i]] = value.qText;
+                                } else if (fieldTypes[i] == "N") {
+                                    resVal[fieldNames[i]] = value.qNum;
+                                } else if (fieldTypes[i] == "T") {
+                                    resVal[fieldNames[i]] = new Date((value.qNum - 25569) * 86400 * 1000).toJSON();
+                                }
+                            }
+                        });
+                        res.push(resVal);
+                    });
+                });
+                reply(res);
+            });
+        }
+}, {
         method: 'GET',
         path: '/v1/docs/{docId}/object/{objId}/pivotdata',
         handler: function (request, reply) {
@@ -230,8 +306,7 @@ module.exports.routes = [
                 });
             });
         }
-            },
-    {
+}, {
         method: 'GET',
         path: '/v1/docs/{docId}/object/{objId}/layers',
         handler: function (request, reply) {
@@ -257,8 +332,7 @@ module.exports.routes = [
                 });
             });
         }
-            },
-    {
+}, {
         method: 'GET',
         path: '/v1/docs/{docId}/object/{objId}/layout',
         handler: function (request, reply) {
@@ -278,5 +352,5 @@ module.exports.routes = [
                 });
             });
         }
-            }
-            ];
+}
+];
