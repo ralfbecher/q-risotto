@@ -266,7 +266,7 @@ module.exports.routes = [
                                 } else if (fieldTypes[i] == "N") {
                                     resVal[fieldNames[i]] = value.qNum;
                                 } else if (fieldTypes[i] == "T") {
-                                    resVal[fieldNames[i]] = new Date((value.qNum - 25569) * 86400 * 1000).toJSON();
+                                    resVal[fieldNames[i]] = dateFromQlikNumber(value.qNum).toJSON();
                                 }
                             }
                         });
@@ -354,3 +354,11 @@ module.exports.routes = [
         }
 }
 ];
+
+function dateFromQlikNumber(n) {
+    // return: Date from QlikView number
+    var d = new Date((n - 25569) * 86400 * 1000);
+    // since date was created in UTC shift it to the local timezone
+    d.setTime(d.getTime() + d.getTimezoneOffset() * 60 * 1000);
+    return d;
+}
