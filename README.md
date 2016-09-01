@@ -41,7 +41,7 @@ POST /v1/docs/{docId}/hypercube/**json** - give a qHyperCubeDef JSON as payload 
 
 See [config.js](./config.js) for configurations.
 
-Start on Qlik Sense server with `npm server` or integrate into Qlik Sense ServiceDispatcher.
+Start on Qlik Sense server with `npm start` or integrate into Qlik Sense ServiceDispatcher.
 
 Navigate with browser or other tools to `https://<qlik sense server name>:1338/<endpoint>`
 
