@@ -50,7 +50,7 @@ Test q-risotto API calls with Postman:
 
 Use QlikView with the Qlik REST Connector to retrieve data from Qlik Sense:
 ![q-risotto with QlikView REST connector](qlikview-example.png)
-![q-risotto with QlikView REST connector](qlikview-example2.png)
+![q-risotto with QlikView REST connector2](qlikview-example2.png)
 
 
 ### Author
