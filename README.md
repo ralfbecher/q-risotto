@@ -45,6 +45,14 @@ Start on Qlik Sense server with `npm server` or integrate into Qlik Sense Servic
 
 Navigate with browser or other tools to `https://<qlik sense server name>:1338/<endpoint>`
 
+Test q-risotto API calls with Postman:
+![q-risotto with Postman](postman-example.png)
+
+Use QlikView with the Qlik REST Connector to retrieve data from Qlik Sense:
+![q-risotto with QlikView REST connector](qlikview-example.png)
+![q-risotto with QlikView REST connector](qlikview-example2.png)
+
+
 ### Author
 
 **Ralf Becher**
