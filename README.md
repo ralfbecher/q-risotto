@@ -37,6 +37,12 @@ POST /v1/docs/{docId}/**hypercube** - give a qHyperCubeDef JSON as payload (requ
 
 POST /v1/docs/{docId}/hypercube/**json** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().qHyperCube transformed into a **JSON collection** of data rows (eg. easy to use with Qlik REST Connector), date and timestamps are delivered in UTC-time
 
+### Installing
+
+`cd src`
+
+`npm install`
+
 ### Usage
 
 See [config.js](./config.js) for configurations.
