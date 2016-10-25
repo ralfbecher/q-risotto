@@ -17,25 +17,29 @@ The development state of this API is at the very beginning and highly incomplete
 
 See also: [routes.js](./routes/routes.js)
 
-GET /v1/**docs** - all docs on server, returns getDocList().**qDocList**
+GET **/v1/docs** - all docs on server, returns getDocList().**qDocList**
 
-GET /v1/docs/**{docId}** - app layout, returns getAppLayout().**qLayout**
+GET **/v1/doc/{docId}** - app layout, returns getAppLayout().**qLayout**
 
-GET /v1/docs/{docId}/**objects** - all objects of app, returns getAllInfos().**qInfos**
+GET **/v1/doc/{docId}/objects** - all objects of app, returns getAllInfos().**qInfos**
 
-GET /v1/docs/{docId}/object/**{objId}** - object layout, returns getLayout().**qLayout**
+GET **/v1/doc/{docId}/object/{objId}** - object layout, returns getLayout().**qLayout**
 
-GET /v1/docs/{docId}/object/{objId}/**layout** - layout data, returns getLayout().**qLayout** depending on object type it contains qHyperCube and qDataPages
+GET **/v1/doc/{docId}/object/{objId}/layout** - layout data, returns getLayout().**qLayout** depending on object type it contains qHyperCube and qDataPages
 
-GET /v1/docs/{docId}/object/{objId}/**data** - object data, returns either getLayout().**qHyperCube/qListObject** depending on object type chart/listbox, not data for pivot tables
+GET **/v1/doc/{docId}/object/{objId}/data** - object data, returns either getLayout().**qHyperCube/qListObject** depending on object type chart/listbox, not data for pivot tables
 
-GET /v1/docs/{docId}/object/{objId}/**pivotdata** - object data, returns getLayout().**qPivotDataPages** for pivot tables
+GET **/v1/doc/{docId}/object/{objId}/pivotdata** - object data, returns getLayout().**qPivotDataPages** for pivot tables
 
-GET /v1/docs/{docId}/object/{objId}/**layers** - object data, returns getLayout().**layers** for maps
+GET **/v1/doc/{docId}/object/{objId}/layers** - object data, returns getLayout().**layers** for maps
 
-POST /v1/docs/{docId}/**hypercube** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().**qHyperCube**
+POST **/v1/doc/{docId}/hypercube** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().**qHyperCube**
 
-POST /v1/docs/{docId}/hypercube/**json** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().qHyperCube transformed into a **JSON collection** of data rows (eg. easy to use with Qlik REST Connector), date and timestamps are delivered in UTC-time
+POST **/v1/doc/{docId}/hypercube/json** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().qHyperCube transformed into a **JSON collection** of data rows (eg. easy to use with Qlik REST Connector), date and timestamps are delivered in UTC-time
+
+### Static Resources
+
+GET /**wdc** - Tableau WDC to connect q-risotto endpoint /v1/doc/{docId}/hypercube/json
 
 ### Installing
 
@@ -51,13 +55,23 @@ Start on Qlik Sense server with `npm start` or integrate into Qlik Sense Service
 
 Navigate with browser or other tools to `https://<qlik sense server name>:1338/<endpoint>`
 
+####Postman
+
 Test q-risotto API calls with Postman:
 ![q-risotto with Postman](postman-example.png)
+
+####QlikView
 
 Use QlikView with the Qlik REST Connector to retrieve data from Qlik Sense:
 ![q-risotto with QlikView REST connector](qlikview-example.png)
 ![q-risotto with QlikView REST connector 2](qlikview-example-2.png)
 
+####Tableau
+
+Use q-risotto WDC with Tableau to retrieve data from Qlik Sense:
+![q-risotto with Tableau](tableau-example.png)
+![q-risotto with Tableau](tableau-example-2.png)
+![q-risotto with Tableau](tableau-example-3.png)
 
 ### Author
 

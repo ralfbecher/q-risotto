@@ -1,6 +1,7 @@
 'use strict';
 
 const Hapi = require('hapi');
+const Inert = require('inert');
 const config = require('./config')
 const path = require('path')
 const fs = require('fs');
@@ -13,6 +14,13 @@ const tls = {
 };
 
 const server = new Hapi.Server();
+
+server.register(Inert, (err) => {
+    if (err) {
+        throw err;
+    }
+});
+
 server.connection({
     port: config.port,
     tls: tls

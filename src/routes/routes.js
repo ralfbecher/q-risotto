@@ -46,6 +46,20 @@ module.exports.routes = [
             });
         }
     },
+    { // static file content (WDC)
+        method: 'GET',
+        path: '/{param*}',
+        config: {
+            auth: false
+        },
+        handler: {
+            directory: {
+                path: 'public',
+                listing: true,
+                index: 'index.html'
+            }
+        }
+    },
     {
         method: 'GET',
         path: '/v1/docs',
@@ -64,7 +78,7 @@ module.exports.routes = [
     },
     {
         method: 'GET',
-        path: '/v1/docs/{docId}',
+        path: '/v1/doc/{docId}',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId);
@@ -83,7 +97,7 @@ module.exports.routes = [
     },
     {
         method: 'GET',
-        path: '/v1/docs/{docId}/objects',
+        path: '/v1/doc/{docId}/objects',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId);
@@ -102,7 +116,7 @@ module.exports.routes = [
     },
     {
         method: 'GET',
-        path: '/v1/docs/{docId}/object/{objId}',
+        path: '/v1/doc/{docId}/object/{objId}',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId);
@@ -128,7 +142,7 @@ module.exports.routes = [
     },
     {
         method: 'GET',
-        path: '/v1/docs/{docId}/object/{objId}/data',
+        path: '/v1/doc/{docId}/object/{objId}/data',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "data");
@@ -169,7 +183,7 @@ module.exports.routes = [
     },
     {
         method: 'POST',
-        path: '/v1/docs/{docId}/hypercube',
+        path: '/v1/doc/{docId}/hypercube',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "hypercube");
@@ -177,11 +191,17 @@ module.exports.routes = [
                 _global = global;
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
+                var qHyperCubeDef = {};
+                if (request.payload.hasOwnProperty('qHyperCubeDef')) {
+                    qHyperCubeDef = request.payload.qHyperCubeDef;
+                } else {
+                    qHyperCubeDef = request.payload;
+                }
                 return doc.createSessionObject({
                     qInfo: {
                         qType: 'qrisotto'
                     },
-                    qHyperCubeDef: request.payload
+                    qHyperCubeDef: qHyperCubeDef
                 })
             }).then(function (cube) {
                 return cube.getLayout().then(function (layout) {
@@ -202,7 +222,7 @@ module.exports.routes = [
     },
     {
         method: 'POST',
-        path: '/v1/docs/{docId}/hypercube/json',
+        path: '/v1/doc/{docId}/hypercube/json',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "hypercube/json");
@@ -210,11 +230,18 @@ module.exports.routes = [
                 _global = global;
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
+                console.log(request.payload);
+                var qHyperCubeDef = {};
+                if (request.payload.hasOwnProperty('qHyperCubeDef')) {
+                    qHyperCubeDef = request.payload.qHyperCubeDef;
+                } else {
+                    qHyperCubeDef = request.payload;
+                }
                 return doc.createSessionObject({
                     qInfo: {
                         qType: 'qrisotto'
                     },
-                    qHyperCubeDef: request.payload
+                    qHyperCubeDef: qHyperCubeDef
                 })
             }).then(function (cube) {
                 return cube.getLayout().then(function (layout) {
@@ -278,7 +305,7 @@ module.exports.routes = [
         }
 }, {
         method: 'GET',
-        path: '/v1/docs/{docId}/object/{objId}/pivotdata',
+        path: '/v1/doc/{docId}/object/{objId}/pivotdata',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "pivotdata");
@@ -308,7 +335,7 @@ module.exports.routes = [
         }
 }, {
         method: 'GET',
-        path: '/v1/docs/{docId}/object/{objId}/layers',
+        path: '/v1/doc/{docId}/object/{objId}/layers',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "layers");
@@ -334,7 +361,7 @@ module.exports.routes = [
         }
 }, {
         method: 'GET',
-        path: '/v1/docs/{docId}/object/{objId}/layout',
+        path: '/v1/doc/{docId}/object/{objId}/layout',
         handler: function (request, reply) {
             var _global = {};
             console.log("doc", request.params.docId, "object", request.params.objId, "layout");
