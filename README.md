@@ -47,6 +47,26 @@ GET /**wdc** - Tableau WDC to connect q-risotto endpoint /v1/doc/{docId}/hypercu
 
 `npm install`
 
+### Qlik Sense Service Dispatcher Integration
+
+* Copy the files manually with admin priviliges into  
+```C:\Program Files\Qlik\Sense\ServiceDispatcher\Node\q-risotto\```  
+
+* Then append the following configuration options to  
+```C:\Program Files\Qlik\Sense\ServiceDispatcher\services.conf```  
+This will let the Service Dispatcher know how to run the module, this step has to be re-applied in an upgrade of Qlik Sense Server.
+
+```
+[q-risotto]
+Identity=Qlik.q-risotto
+Enabled=true
+DisplayName=q-risotto
+ExecType=nodejs
+ExePath=Node\node.exe
+Script=Node\q-risotto\server.js
+
+[q-risotto.parameters]
+```
 ### Usage
 
 See [config.js](./config.js) for configurations.
