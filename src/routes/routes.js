@@ -230,7 +230,10 @@ module.exports.routes = [
                 _global = global;
                 return global.openDoc(request.params.docId);
             }).then(function (doc) {
-                console.log(request.payload);
+                try {
+                    console.log(JSON.stringify(request.payload, null, 4));
+                } catch(e) {
+                }
                 var qHyperCubeDef = {};
                 if (request.payload.hasOwnProperty('qHyperCubeDef')) {
                     qHyperCubeDef = request.payload.qHyperCubeDef;
@@ -272,7 +275,11 @@ module.exports.routes = [
                 if (cube.hasOwnProperty('qDimensionInfo')) {
                     cube.qDimensionInfo.forEach(function (dim) {
                         fieldNames.push(dim.qFallbackTitle);
-                        fieldTypes.push(dim.qDimensionType); //D for discrete (String), N for numeric (Double), T for Time (Timestamp)
+                        if (dim.qTags.indexOf('$date') > -1 || dim.qTags.indexOf('$timestamp') > -1) {
+                            fieldTypes.push('T'); // T for Time (Timestamp)
+                        } else {
+                            fieldTypes.push(dim.qDimensionType); //D for discrete (String), N for numeric (Double)
+                        }
                     });
                 }
                 if (cube.hasOwnProperty('qMeasureInfo')) {
@@ -281,6 +288,8 @@ module.exports.routes = [
                         fieldTypes.push(measureTypesMap[measure.qNumFormat.qType]);
                     });
                 }
+                console.log('fieldNames:', fieldNames);
+                console.log('fieldTypes:', fieldTypes);
                 cube.qDataPages.forEach(function (dataPage) {
                     dataPage.qMatrix.forEach(function (row) {
                         var resVal = {};
