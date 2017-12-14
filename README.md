@@ -99,6 +99,10 @@ Use q-risotto with R and retrieve data from Qlik Sense, there will be an
 R convenience package soon to wrap q-risotto and complex Qlik structs like qHypoerCubeDef:
 ![q-risotto with R](r-example.png)
 
+Here you can find an R test script: [test.R](test.R.md) - which will plot this result:
+
+![resulting plot of test.R](test.R-result.png)
+
 ### Author
 
 **Ralf Becher**
