@@ -1,4 +1,4 @@
-````
+```
 library(httr)
 library(jsonlite)
 library(plotly)
@@ -97,4 +97,4 @@ d <- fromJSON(content(r, "text"))
 # reshape if needed:
 # d <- d[c("Cumulative New Cases", "Cumulative Closed Cases", "Date")]
 plot_ly(data = d, x = d$`Cumulative New Cases`, y = d$`Cumulative Closed Cases`)
-````
+```
