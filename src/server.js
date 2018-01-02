@@ -2,16 +2,10 @@
 
 const Hapi = require('hapi');
 const Inert = require('inert');
-const config = require('./config')
 const path = require('path')
 const fs = require('fs');
 const routes = require('./routes');
-
-const tls = {
-    ca: [fs.readFileSync(config.certificates.root)],
-    key: fs.readFileSync(config.certificates.server_key),
-    cert: fs.readFileSync(config.certificates.server)
-};
+const config = require('./config')
 
 const server = new Hapi.Server();
 
@@ -23,7 +17,11 @@ server.register(Inert, (err) => {
 
 server.connection({
     port: config.port,
-    tls: tls
+    tls: {
+        ca: [config.certificates.ca],
+        key: config.certificates.key,
+        cert: config.certificates.cert
+    }
 });
 
 server.route(routes.routes);
