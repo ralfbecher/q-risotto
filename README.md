@@ -27,15 +27,39 @@ GET **/v1/doc/{docId}/object/{objId}** - object layout, returns getLayout().**qL
 
 GET **/v1/doc/{docId}/object/{objId}/layout** - layout data, returns getLayout().**qLayout** depending on object type it contains qHyperCube and qDataPages
 
-GET **/v1/doc/{docId}/object/{objId}/data** - object data, returns either getLayout().**qHyperCube/qListObject** depending on object type chart/listbox, not data for pivot tables
+GET **/v1/doc/{docId}/object/{objId}/data** - object data, returns first data page of either getLayout().**qHyperCube** or **qListObject** depending on object type chart/listbox, not data for pivot tables
 
 GET **/v1/doc/{docId}/object/{objId}/pivotdata** - object data, returns getLayout().**qPivotDataPages** for pivot tables
 
 GET **/v1/doc/{docId}/object/{objId}/layers** - object data, returns getLayout().**layers** for maps
 
-POST **/v1/doc/{docId}/hypercube** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().**qHyperCube**
+POST **/v1/doc/{docId}/hypercube** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().**qHyperCube**, without data page
 
-POST **/v1/doc/{docId}/hypercube/json** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().qHyperCube transformed into a **JSON collection** of data rows (eg. easy to use with Qlik REST Connector), date and timestamps are delivered in UTC-time
+POST **/v1/doc/{docId}/hypercube/size** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated size of getLayout().**qHyperCube** as the following JSON object:
+```
+{
+    "columns": 3,
+    "rows": 89,
+    "pages": 1
+}
+```
+
+POST **/v1/doc/{docId}/hypercube/json/{pageNo\*}** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().qHyperCube.**qDataPages[0].qMatrix** (the first data page or page number given as last URL param) transformed into a **JSON collection** of data rows (eg. easy to use with Qlik REST Connector), date and timestamps are delivered in UTC-time:
+```
+[
+    {
+        "Date": "2014-10-11T22:00:00.000Z",
+        "Cumulative New Cases": 4,
+        "Cumulative Closed Cases": 0
+    },
+    {
+        "Date": "2014-10-18T22:00:00.000Z",
+        "Cumulative New Cases": 5,
+        "Cumulative Closed Cases": 3
+    },
+...
+]
+```
 
 ### Static Resources
 
@@ -68,6 +92,8 @@ Script=Node\q-risotto\server.js
 [q-risotto.parameters]
 ```
 ### Usage
+
+#### Config
 
 See [config.json](./src/config.json) for configurations.
 
