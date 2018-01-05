@@ -162,13 +162,19 @@ Here you can find an R test script: [test.R](test.R.md) - which will plot this r
 
 ![resulting plot of test.R](test.R-result.png)
 
+***
+
 ### Author
 
 **Ralf Becher**
 
-+ [irregular.bi](http://irregular.bi)
+* [irregular.bi](http://irregular.bi)
 * [twitter/irregularbi](http://twitter.com/irregularbi)
 * [github.com/ralfbecher](http://github.com/ralfbecher)
+
+[irregular.bi]: http://irregular.bi
+[twitter/irregularbi]: http://twitter.com/irregularbi
+[github.com/ralfbecher]: http://github.com/ralfbecher
 
 ### License
 
