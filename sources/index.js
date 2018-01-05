@@ -5,7 +5,7 @@ const Inert = require('inert');
 const path = require('path')
 const fs = require('fs');
 const routes = require('./routes');
-const config = require('./config')
+const config = require('./src/config/config')
 
 const server = new Hapi.Server();
 

@@ -2,9 +2,7 @@
 
 const enigma = require('enigma.js');
 const WebSocket = require('ws');
-const path = require('path');
-const fs = require('fs');
-const config = require('./config');
+const config = require('../src/config/config');
 
 const schema = require(config.enigmaSchema);
 

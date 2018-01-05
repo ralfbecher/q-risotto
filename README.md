@@ -15,7 +15,7 @@ The development state of this API is at the very beginning and highly incomplete
 
 ### Endpoints
 
-See also: [routes.js](./src/routes/routes.js)
+See also: [routes.js](./sources/src/routes/routes.js)
 
 GET **/v1/docs** - all docs on server, returns getDocList().**qDocList**
 
@@ -33,9 +33,42 @@ GET **/v1/doc/{docId}/object/{objId}/pivotdata** - object data, returns getLayou
 
 GET **/v1/doc/{docId}/object/{objId}/layers** - object data, returns getLayout().**layers** for maps
 
-POST **/v1/doc/{docId}/hypercube** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().**qHyperCube**, without data page
+POST **/v1/doc/{docId}/hypercube** - give a column list array or HyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().**qHyperCube**, without data page
 
-POST **/v1/doc/{docId}/hypercube/size** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated size of getLayout().**qHyperCube** as the following JSON object:
+Examples for payload:
+
+1. a list of columns as string, measures start with equal sign, all others are treated as dimensions:
+```
+[
+    "Date.autoCalendar.Date",
+    "Case Owner Group",
+    "=Avg([Case Duration Time])",
+    "=Count({$<Status -={'Closed'} >} Distinct %CaseId )"
+]
+```
+2. a list of NxDimension and NxMeasure objects, can be mixed with column string fro 1.:
+```
+    "Date.autoCalendar.Date",
+    {"qDef": {"qFieldDefs": ["Case Owner Group"], "qFieldLabels": ["Group"]}},
+    {"qDef": {"qDef": "=Avg([Case Duration Time])", "qLabel": "Avg Case Duration Time"}},
+    {"qDef": {"qDef": "=Count({$<Status -={'Closed'} >} Distinct %CaseId )", "qLabel": "Open Cases"}}
+]
+```
+3. a HyperCubeDef (see link below)
+
+See Qlik help also:
+
+* [Columns]
+* [NxDimension]
+* [NxMeasure]
+* [HyperCubeDef]
+
+[Columns]: (http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/APIs/Content/QlikVisual/qlik-visual-columns.htm)
+[NxDimension]: (http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/EngineAPI/Content/Structs/NxDimension.htm)
+[NxMeasure]: (http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/EngineAPI/Content/Structs/NxMeasureInfo.htm)
+[HyperCubeDef]: (http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/EngineAPI/Content/Structs/HyperCubeDef.htm)
+
+POST **/v1/doc/{docId}/hypercube/size** - give a give a column list array or HyperCubeDef JSON as payload (request body) and get back the evaluated size of getLayout().**qHyperCube** as the following JSON object:
 ```
 {
     "columns": 3,
@@ -44,7 +77,7 @@ POST **/v1/doc/{docId}/hypercube/size** - give a qHyperCubeDef JSON as payload (
 }
 ```
 
-POST **/v1/doc/{docId}/hypercube/json/{pageNo\*}** - give a qHyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().qHyperCube.**qDataPages[0].qMatrix** (the first data page or page number given as last URL param) transformed into a **JSON collection** of data rows (eg. easy to use with Qlik REST Connector), date and timestamps are delivered in UTC-time:
+POST **/v1/doc/{docId}/hypercube/json/{pageNo\*}** - give agive a column list array or HyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().qHyperCube.**qDataPages[0].qMatrix** (the first data page or page number given as last URL param) transformed into a **JSON collection** of data rows (eg. easy to use with Qlik REST Connector), date and timestamps are delivered in UTC-time:
 ```
 [
     {
@@ -67,7 +100,7 @@ GET /**wdc** - Tableau WDC to connect q-risotto endpoint /v1/doc/{docId}/hypercu
 
 ### Installing
 
-`cd src`
+`cd sources`
 
 `npm install`
 
@@ -95,7 +128,7 @@ Script=Node\q-risotto\server.js
 
 #### Config
 
-See [config.json](./src/config.json) for configurations.
+See [config.json](./sources/src/config.json) for configurations.
 
 Start on Qlik Sense server with `npm start` or integrate into Qlik Sense ServiceDispatcher.
 
