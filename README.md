@@ -63,10 +63,10 @@ See Qlik help also:
 * [NxMeasure]
 * [HyperCubeDef]
 
-[Columns]: (http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/APIs/Content/QlikVisual/qlik-visual-columns.htm)
-[NxDimension]: (http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/EngineAPI/Content/Structs/NxDimension.htm)
-[NxMeasure]: (http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/EngineAPI/Content/Structs/NxMeasureInfo.htm)
-[HyperCubeDef]: (http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/EngineAPI/Content/Structs/HyperCubeDef.htm)
+[Columns]: http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/APIs/Content/QlikVisual/qlik-visual-columns.htm
+[NxDimension]: http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/EngineAPI/Content/Structs/NxDimension.htm
+[NxMeasure]: http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/EngineAPI/Content/Structs/NxMeasureInfo.htm
+[HyperCubeDef]: http://help.qlik.com/en-US/sense-developer/November2017/Subsystems/EngineAPI/Content/Structs/HyperCubeDef.htm
 
 POST **/v1/doc/{docId}/hypercube/size** - give a give a column list array or HyperCubeDef JSON as payload (request body) and get back the evaluated size of getLayout().**qHyperCube** as the following JSON object:
 ```
