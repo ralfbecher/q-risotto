@@ -37,18 +37,18 @@ POST **/v1/doc/{docId}/hypercube** - give a column list array or HyperCubeDef JS
 
 **Examples for payload to define a hypercube:**
 
-1. a list of columns as string, measures start with equal sign, all others are treated as dimensions:
+1. a list of columns as string, measures start with equal sign, all others are treated as dimensions (hint: use brackets for dimensions):
 ```
 [
-    "Date.autoCalendar.Date",
-    "Case Owner Group",
+    "[Date.autoCalendar.Date]",
+    "[Case Owner Group]",
     "=Avg([Case Duration Time])",
     "=Count({$<Status -={'Closed'} >} Distinct %CaseId )"
 ]
 ```
-2. a list of NxDimension and NxMeasure objects, can be mixed with column strings like in 1.:
+2. a list of NxDimension and NxMeasure structure objects, can be mixed with column strings like in 1.:
 ```
-    "Date.autoCalendar.Date",
+    "[Date.autoCalendar.Date]",
     {"qDef": {"qFieldDefs": ["Case Owner Group"], "qFieldLabels": ["Group"]}},
     {"qDef": {"qDef": "=Avg([Case Duration Time])", "qLabel": "Avg Case Duration Time"}},
     {"qDef": {"qDef": "=Count({$<Status -={'Closed'} >} Distinct %CaseId )", "qLabel": "Open Cases"}}
