@@ -15,7 +15,7 @@ The development state of this API is at the very beginning and highly incomplete
 
 ### Endpoints
 
-See also: [routes.js](./sources/src/routes/routes.js)
+See also: [routes.js](./sources/routes/routes.js)
 
 GET **/v1/docs** - all docs on server, returns getDocList().**qDocList**
 
@@ -128,7 +128,7 @@ Script=Node\q-risotto\server.js
 
 #### Config
 
-See [config.json](./sources/src/config.json) for configurations.
+See [config.json](./sources/src/config/config.json) for configurations.
 
 Start on Qlik Sense server with `npm start` or integrate into Qlik Sense ServiceDispatcher.
 
