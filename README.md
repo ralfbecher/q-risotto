@@ -35,7 +35,7 @@ GET **/v1/doc/{docId}/object/{objId}/layers** - object data, returns getLayout()
 
 POST **/v1/doc/{docId}/hypercube** - give a column list array or HyperCubeDef JSON as payload (request body) and get back the evaluated getLayout().**qHyperCube**, without data page
 
-Examples for payload:
+**Examples for payload to define a hypercube:**
 
 1. a list of columns as string, measures start with equal sign, all others are treated as dimensions:
 ```
@@ -46,7 +46,7 @@ Examples for payload:
     "=Count({$<Status -={'Closed'} >} Distinct %CaseId )"
 ]
 ```
-2. a list of NxDimension and NxMeasure objects, can be mixed with column string fro 1.:
+2. a list of NxDimension and NxMeasure objects, can be mixed with column strings like in 1.:
 ```
     "Date.autoCalendar.Date",
     {"qDef": {"qFieldDefs": ["Case Owner Group"], "qFieldLabels": ["Group"]}},
