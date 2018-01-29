@@ -2,8 +2,8 @@
   "name": "q-risotto",
   "version": "1.0.0",
   "description": "Qlik REST In Sense (otto) - a RESTful Engine API wrapper",
-  "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ralf Becher, irregular.bi",

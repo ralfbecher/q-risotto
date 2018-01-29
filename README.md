@@ -48,6 +48,7 @@ POST **/v1/doc/{docId}/hypercube** - give a column list array or HyperCubeDef JS
 ```
 2. a list of NxDimension and NxMeasure structure objects, can be mixed with column strings like in 1.:
 ```
+ [
     "[Date.autoCalendar.Date]",
     {"qDef": {"qFieldDefs": ["Case Owner Group"], "qFieldLabels": ["Group"]}},
     {"qDef": {"qDef": "=Avg([Case Duration Time])", "qLabel": "Avg Case Duration Time"}},

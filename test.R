@@ -1,98 +1,32 @@
-library(httr)
-library(jsonlite)
+senser_data <- function(host,port,app,payload,fields) {
+  library(httr)
+  library(jsonlite)
+
+  print( ifelse( is.null(host), 'qrisotto host not specified', paste('host =',host) ) )
+  print( ifelse( is.null(port), 'qrisotto port not specified', paste('port =',port) ) )
+  print( ifelse( is.null(app), 'app id not specified', paste('app =',app) ) )
+  print( ifelse( is.null(payload), 'payload not specified', 'payload =' ) )
+  print( payload )
+  print( ifelse( is.null(fields), 'payload not specified', 'fields =' ) )
+  print( fields )
+
+  # url <- "https://WIN-09USCP1J3QT:1338/v1/doc/002420fe-9858-4212-9da8-3ce00d5be660/hypercube/json"
+  
+  url <- paste("https://", host, ":", port, "/v1/doc/", app, "/hypercube/json", sep="")
+  print( paste('url =', url) )
+  
+  r <- POST(url, body = toJSON(payload), encode = "json", config = httr::config(ssl_verifypeer = FALSE))
+  d <- fromJSON(content(r, "text"))
+  names(d) <- fields
+  
+ return(d)
+}
+
+json <- fromJSON('["Date.autoCalendar.Date", "=Count( {$<[Case Is Closed] ={\'True\'} >} %CaseId )", "=Count( {$<[Status]={\'New\'} >} Distinct %CaseId )"]')
+
+d <- senser_data(host="WIN-09USCP1J3QT",port=1338,app="002420fe-9858-4212-9da8-3ce00d5be660",payload=json,fields=c("Date", "Closed Cases", "New Cases"))
+d <- d[order(d$Date),]
+
 library(plotly)
-
-url <- 'https://WIN-09USCP1J3QT:1338/v1/doc/002420fe-9858-4212-9da8-3ce00d5be660/hypercube/json'
-
-body <- '{
-    "qInfo": {
-        "qId": "",
-        "qType": "HyperCube"
-    },
-    "qHyperCubeDef": {
-        "qDimensions": [
-            {
-                "qDef": {
-                    "qGrouping": "N",
-                    "qFieldDefs": [
-                        "Date.autoCalendar.Date"
-                    ],
-                    "qFieldLabels": [
-                        "Date"
-                    ],
-                    "qSortCriterias": [
-                        {
-                            "qSortByNumeric": 1,
-                            "qSortByLoadOrder": 1,
-                            "qExpression": {}
-                        }
-                    ],
-                    "qNumberPresentations": [],
-                    "qActiveField": 0,
-                    "autoSort": true,
-                    "cId": "hwjAmT",
-                    "othersLabel": "Others"
-                },
-                "qNullSuppression": true,
-            }
-        ],
-        "qMeasures": [
-            {
-                "qLibraryId": "XpPvDqf",
-                "qDef": {
-                    "qTags": [],
-                    "qGrouping": "N",
-                    "qNumFormat": {
-                        "qType": "F",
-                        "qnDec": 10,
-                        "qUseThou": 0
-                    }
-                },
-                "qSortBy": {
-                    "qSortByNumeric": -1,
-                    "qSortByLoadOrder": 1,
-                    "qExpression": {}
-                }
-            },
-            {
-                "qLibraryId": "FCzjwjd",
-                "qDef": {
-                    "qTags": [],
-                    "qGrouping": "N",
-                    "qNumFormat": {
-                        "qType": "F",
-                        "qnDec": 10,
-                        "qUseThou": 0
-                    }
-                },
-                "qSortBy": {
-                    "qSortByNumeric": -1,
-                    "qSortByLoadOrder": 1,
-                    "qExpression": {}
-                }
-            }
-        ],
-        "qInterColumnSortOrder": [
-            0,
-            2,
-            1
-        ],
-        "qSuppressZero": true,
-        "qSuppressMissing": true,
-        "qInitialDataFetch": [
-            {
-                "qLeft": 0,
-                "qTop": 0,
-                "qWidth": 3,
-                "qHeight": 500
-            }
-        ],
-    }
-}'
-
-r <- POST(url, body = body, encode = "json")
-
-d <- fromJSON(content(r, "text"))
-# reshape if needed:
-# d <- d[c("Cumulative New Cases", "Cumulative Closed Cases", "Date")]
-plot_ly(data = d, x = d$`Cumulative New Cases`, y = d$`Cumulative Closed Cases`)
+plot_ly(data = d, x = ~d$`Date`, y = ~d$`Closed Cases`, name = 'trace 0', type = 'scatter', mode = 'lines+markers')
+# plot_ly(data = d, x = d$`New Cases`, y = d$`Closed Cases`) 
