@@ -22,7 +22,12 @@ senser_data <- function(host,port,app,payload,fields) {
  return(d)
 }
 
+library(jsonlite)
+# HypeCube fields as JSON string, notice quote escaping
 json <- fromJSON('["Date.autoCalendar.Date", "=Count( {$<[Case Is Closed] ={\'True\'} >} %CaseId )", "=Count( {$<[Status]={\'New\'} >} Distinct %CaseId )"]')
+
+# HypeCube fields as list
+# json <- c("Date.autoCalendar.Date", "=Count( {$<[Case Is Closed] ={'True'} >} %CaseId )", "=Count( {$<[Status]={'New'} >} Distinct %CaseId )")
 
 d <- senser_data(host="WIN-09USCP1J3QT",port=1338,app="002420fe-9858-4212-9da8-3ce00d5be660",payload=json,fields=c("Date", "Closed Cases", "New Cases"))
 d <- d[order(d$Date),]
