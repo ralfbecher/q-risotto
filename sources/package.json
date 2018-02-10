@@ -13,6 +13,7 @@
     "enigma.js": "^2.2.0",
     "hapi": "16.6.2",
     "inert": "^4.0.2",
+    "log4js": "^2.5.2",
     "require-hapiroutes": "^0.1.9",
     "ws": "^3.3.3"
   }

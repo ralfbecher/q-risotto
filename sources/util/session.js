@@ -15,6 +15,6 @@ module.exports = () => enigma.create({
     cert: config.certificates.cert,
     headers: {
       'X-Qlik-User': `UserDirectory=${encodeURIComponent(config.userDirectory)}; UserId=${encodeURIComponent(config.userId)}`,
-    },
-  }),
+    }
+  })
 });

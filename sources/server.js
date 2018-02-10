@@ -6,6 +6,10 @@ const path = require('path')
 const fs = require('fs');
 const routes = require('./routes');
 const config = require('./src/config/config')
+const log4js = require('log4js');
+const logger = log4js.getLogger();
+
+logger.info("q-risotto started");
 
 const server = new Hapi.Server();
 
@@ -30,5 +34,5 @@ server.start((err) => {
     if (err) {
         throw err;
     }
-    console.log('Server running at:', server.info.uri);
+    logger.info('Server running at:', server.info.uri);
 });

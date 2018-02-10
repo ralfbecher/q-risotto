@@ -3,9 +3,8 @@
 const pjson = require('../package.json');
 const utils = require('../util/utils');
 const createSession = require('../util/session');
-
-// switch console.log output
-const debug = false;
+const log4js = require('log4js');
+const logger = log4js.getLogger();
 
 const nxPage = {
     "qTop": 0,
@@ -163,7 +162,7 @@ module.exports = {
     // path: '/v1/doc/{docId}'
     doc: (request, reply) => {
         var _global = {};
-        if (debug) console.log("doc", request.params.docId);
+        logger.info("doc", request.params.docId);
         const session = createSession();
         session.open()
             .then(global => {
@@ -183,7 +182,7 @@ module.exports = {
 
     // path: '/v1/doc/{docId}/objects'
     objects: (request, reply) => {
-        if (debug) console.log("doc objects", request.params.docId);
+        logger.info("doc objects", request.params.docId);
         var _global = {};
         const session = createSession();
         session.open()
@@ -204,7 +203,7 @@ module.exports = {
 
     // path: '/v1/doc/{docId}/object/{objId}'
     objectId: (request, reply) => {
-        if (debug) console.log("doc", request.params.docId, "object", request.params.objId);
+        logger.info("doc", request.params.docId, "object", request.params.objId);
         var _global = {};
         const session = createSession();
         session.open()
@@ -233,7 +232,7 @@ module.exports = {
 
     // path: '/v1/doc/{docId}/object/{objId}/layout'
     objectLayout: (request, reply) => {
-        if (debug) console.log("doc", request.params.docId, "object", request.params.objId, "layout");
+        logger.info("doc", request.params.docId, "object", request.params.objId, "layout");
         var _global = {};
         const session = createSession();
         session.open()
@@ -255,7 +254,7 @@ module.exports = {
 
     // path: '/v1/doc/{docId}/object/{objId}/data'
     objectData: (request, reply) => {
-        if (debug) console.log("doc", request.params.docId, "object", request.params.objId, "data");
+        logger.info("doc", request.params.docId, "object", request.params.objId, "data");
         var _global = {};
         const session = createSession();
         var nxPageToGet = nxPage;
@@ -296,7 +295,7 @@ module.exports = {
 
     // path: '/v1/doc/{docId}/object/{objId}/pivotdata'
     objectPivotdata: (request, reply) => {
-        if (debug) console.log("doc", request.params.docId, "object", request.params.objId, "pivotdata");
+        logger.info("doc", request.params.docId, "object", request.params.objId, "pivotdata");
         var _global = {};
         const session = createSession();
         var nxPageToGet = nxPage;
@@ -337,7 +336,7 @@ module.exports = {
 
     // path: '/v1/doc/{docId}/object/{objId}/layers'
     objectLayers: (request, reply) => {
-        if (debug) console.log("doc", request.params.docId, "object", request.params.objId, "layers");
+        logger.info("doc", request.params.docId, "object", request.params.objId, "layers");
         var _global = {};
         const session = createSession();
         session.open()
@@ -367,7 +366,7 @@ module.exports = {
 
     // path: '/v1/doc/{docId}/hypercube'
     hyperCube: (request, reply) => {
-        if (debug) console.log("doc", request.params.docId, "hypercube");
+        logger.info("doc", request.params.docId, "hypercube");
         var _global = {};
         const session = createSession();
         session.open()
@@ -401,7 +400,7 @@ module.exports = {
 
     // path: '/v1/doc/{docId}/hypercube/size'
     hyperCubeSize: (request, reply) => {
-        if (debug) console.log("doc", request.params.docId, "hypercube size");
+        logger.info("doc", request.params.docId, "hypercube size");
         var _global = {};
         const session = createSession();
         var res = {};
@@ -439,7 +438,7 @@ module.exports = {
 
     // path: '/v1/doc/{docId}/hypercube/json/{pageNo*}'
     hyperCubeJson: (request, reply) => {
-        if (debug) console.log("doc", request.params.docId, "hypercube/json");
+        logger.info("doc", request.params.docId, "hypercube/json");
         var _global = {};
         const session = createSession();
         var w = 0, h = 10000, t = 0, page = 1;
@@ -448,7 +447,7 @@ module.exports = {
             try {
                 page = parseInt(request.params.pageNo, 10);
             } catch (error) {
-                if (debug) console.log(error);
+                logger.error(error);
             }
         }
         session.open()
@@ -459,7 +458,7 @@ module.exports = {
             .catch(utils.catchSessionOpen)
             .then(doc => {
                 try {
-                    if (debug) console.log(JSON.stringify(request.payload, null, 4));
+                    logger.info(JSON.stringify(request.payload, null, 4));
                 } catch (e) {
                 }
                 var hyperCube = getHyperCubeFromPayload(request.payload, nxPage);
@@ -479,7 +478,7 @@ module.exports = {
                 nxPageToGet.qTop = t;
                 nxPageToGet.qWidth = w;
                 nxPageToGet.qHeight = h;
-                if (debug) console.log("nxPageToGet", nxPageToGet);
+                logger.info("nxPageToGet", nxPageToGet);
                 return doc.createSessionObject(hyperCube);
             })
             .catch(utils.genericCatch)
@@ -512,7 +511,7 @@ module.exports = {
                                 types.push(measureTypes[measure.qNumFormat.qType]);
                             });
                         }
-                        if (debug) console.log('fieldNames:', names, 'fieldTypes:', types);
+                        logger.info('fieldNames:', names, 'fieldTypes:', types);
 
                         return obj.getHyperCubeData("/qHyperCubeDef", [nxPageToGet])
                             .then(cube => {
