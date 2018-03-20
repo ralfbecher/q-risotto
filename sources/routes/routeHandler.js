@@ -93,8 +93,8 @@ function getHyperCubeFromPayload(payload, nxPage) {
             } else {
                 hyperCube.qHyperCubeDef = payload;
             }
-            hyperCube.qHyperCubeDef.qInitialDataFetch = [nxPage];
         }
+        hyperCube.qHyperCubeDef.qInitialDataFetch = [nxPage];
     }
     return hyperCube;
 }
@@ -525,7 +525,13 @@ module.exports = {
                                                 resVal[names[i]] = null;
                                             } else {
                                                 if (types[i] == fieldTypes.discrete) {
-                                                    resVal[names[i]] = value.qText;
+                                                    if (value.hasOwnProperty('qText')) {
+                                                        resVal[names[i]] = value.qText;
+                                                    } else if (value.hasOwnProperty('qNum')) {
+                                                        resVal[names[i]] = value.qNum;
+                                                    } else {
+                                                        resVal[names[i]] = "null";
+                                                    }
                                                 } else if (types[i] == fieldTypes.numeric) {
                                                     resVal[names[i]] = value.qNum;
                                                 } else if (types[i] == fieldTypes.timestamp) {
