@@ -29,9 +29,14 @@ json <- fromJSON('["Date.autoCalendar.Date", "=Count( {$<[Case Is Closed] ={\'Tr
 # HypeCube fields as list
 # json <- c("Date.autoCalendar.Date", "=Count( {$<[Case Is Closed] ={'True'} >} %CaseId )", "=Count( {$<[Status]={'New'} >} Distinct %CaseId )")
 
-d <- senser_data(host="WIN-09USCP1J3QT",port=1338,app="002420fe-9858-4212-9da8-3ce00d5be660",payload=json,fields=c("Date", "Closed Cases", "New Cases"))
+d <- senser_data(host="WIN-09USCP1J3QT",port=1338,app="326fd5f7-a2fd-4dc3-9d41-3c80bb0e3198",payload=json,fields=c("Date", "Closed Cases", "New Cases"))
+
+library(lubridate);
+d$Date <- ymd_hms(d$Date)
+
 d <- d[order(d$Date),]
 
 library(plotly)
 plot_ly(data = d, x = ~d$`Date`, y = ~d$`Closed Cases`, name = 'trace 0', type = 'scatter', mode = 'lines+markers')
-# plot_ly(data = d, x = d$`New Cases`, y = d$`Closed Cases`) 
+plot_ly(data = d, x = d$`New Cases`, y = d$`Closed Cases`) 
+
