@@ -110,7 +110,6 @@ module.exports = {
                 _global = global;
                 return global.qTProduct();
             })
-            .catch(utils.catchSessionOpen)
             .then(prod => {
                 _qtproduct = prod;
                 return _global.productVersion();
@@ -128,7 +127,10 @@ module.exports = {
                     state: 'cooking'
                 });
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/{param*}' 
@@ -149,14 +151,16 @@ module.exports = {
                 _global = global;
                 return global.getDocList();
             })
-            .catch(utils.catchSessionOpen)
             .then(list => {
                 session.close();
                 reply({
                     qDocList: list
                 });
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/v1/doc/{docId}'
@@ -169,7 +173,6 @@ module.exports = {
                 _global = global;
                 return global.openDoc(request.params.docId, "", "", "", true);
             })
-            .catch(utils.catchSessionOpen)
             .then(doc => doc.getAppLayout())
             .then((layout) => {
                 session.close();
@@ -177,7 +180,10 @@ module.exports = {
                     qLayout: layout
                 });
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/v1/doc/{docId}/objects'
@@ -190,7 +196,6 @@ module.exports = {
                 _global = global;
                 return global.openDoc(request.params.docId, "", "", "", true);
             })
-            .catch(utils.catchSessionOpen)
             .then(doc => doc.getAllInfos())
             .then(infos => {
                 session.close();
@@ -198,7 +203,10 @@ module.exports = {
                     qInfos: infos.qInfos || infos
                 });
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/v1/doc/{docId}/object/{objId}'
@@ -211,11 +219,10 @@ module.exports = {
                 _global = global;
                 return global.openDoc(request.params.docId, "", "", "", true);
             })
-            .catch(utils.catchSessionOpen)
             .then(doc => doc.getObject(request.params.objId))
             .then(object => {
                 if (object) {
-                    return object.getProperties();
+                    return object.getProperties()
                 } else {
                     session.close();
                     reply({});
@@ -227,7 +234,10 @@ module.exports = {
                     qProp: props
                 });
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/v1/doc/{docId}/object/{objId}/layout'
@@ -240,7 +250,6 @@ module.exports = {
                 _global = global;
                 return global.openDoc(request.params.docId);
             })
-            .catch(utils.catchSessionOpen)
             .then(doc => doc.getObject(request.params.objId))
             .then(object => object.getLayout())
             .then(layout => {
@@ -249,7 +258,10 @@ module.exports = {
                     qLayout: layout
                 });
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/v1/doc/{docId}/object/{objId}/data'
@@ -264,7 +276,6 @@ module.exports = {
                 _global = global;
                 return global.openDoc(request.params.docId);
             })
-            .catch(utils.catchSessionOpen)
             .then(doc => doc.getObject(request.params.objId))
             .then(object =>
                 object.getLayout()
@@ -290,7 +301,10 @@ module.exports = {
                 session.close();
                 reply(data);
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/v1/doc/{docId}/object/{objId}/pivotdata'
@@ -305,7 +319,6 @@ module.exports = {
                 _global = global;
                 return global.openDoc(request.params.docId);
             })
-            .catch(utils.catchSessionOpen)
             .then(doc => doc.getObject(request.params.objId))
             .then(object =>
                 object.getLayout()
@@ -331,7 +344,10 @@ module.exports = {
                 session.close();
                 reply(data);
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/v1/doc/{docId}/object/{objId}/layers'
@@ -344,7 +360,6 @@ module.exports = {
                 _global = global;
                 return global.openDoc(request.params.docId);
             })
-            .catch(utils.catchSessionOpen)
             .then(doc => doc.getObject(request.params.objId))
             .then(object =>
                 object.getLayout()
@@ -361,7 +376,10 @@ module.exports = {
                     layers: layers
                 });
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/v1/doc/{docId}/hypercube'
@@ -374,7 +392,6 @@ module.exports = {
                 _global = global;
                 return global.openDoc(request.params.docId);
             })
-            .catch(utils.catchSessionOpen)
             .then(doc => {
                 var hyperCube = getHyperCubeFromPayload(request.payload, nxPage);
                 return doc.createSessionObject(hyperCube);
@@ -395,7 +412,10 @@ module.exports = {
                     qHyperCube: cube
                 });
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/v1/doc/{docId}/hypercube/size'
@@ -409,7 +429,6 @@ module.exports = {
                 _global = global;
                 return global.openDoc(request.params.docId);
             })
-            .catch(utils.catchSessionOpen)
             .then(doc => {
                 var hyperCube = getHyperCubeFromPayload(request.payload, nxPage);
                 return doc.createSessionObject(hyperCube);
@@ -433,7 +452,10 @@ module.exports = {
                 session.close();
                 reply(area);
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     },
 
     // path: '/v1/doc/{docId}/hypercube/json/{pageNo*}'
@@ -455,7 +477,6 @@ module.exports = {
                 _global = global;
                 return global.openDoc(request.params.docId);
             })
-            .catch(utils.catchSessionOpen)
             .then(doc => {
                 try {
                     logger.info(JSON.stringify(request.payload, null, 4));
@@ -478,10 +499,10 @@ module.exports = {
                 nxPageToGet.qTop = t;
                 nxPageToGet.qWidth = w;
                 nxPageToGet.qHeight = h;
+                logger.info("hyperCube", JSON.stringify(hyperCube,null,4));
                 logger.info("nxPageToGet", nxPageToGet);
                 return doc.createSessionObject(hyperCube);
             })
-            .catch(utils.genericCatch)
             .then(obj =>
                 obj.getLayout()
                     .then(layout => {
@@ -543,16 +564,16 @@ module.exports = {
                                     });
                                 }
                                 return res;
-                            })
-                            .catch(utils.genericCatch);
+                            });
                     })
-                    .catch(utils.genericCatch)
                 )
-                .catch(utils.genericCatch)
             .then(res => {
                 reply(res);
             })
-            .catch(utils.genericCatch);
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
     }
 
 }
