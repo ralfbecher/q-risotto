@@ -167,7 +167,7 @@ module.exports = {
     doc: (request, reply) => {
         var _global = {};
         logger.info("doc", request.params.docId);
-        const session = createSession();
+        const session = createSession(request.params.docId);
         session.open()
             .then(global => {
                 _global = global;
@@ -190,7 +190,7 @@ module.exports = {
     objects: (request, reply) => {
         logger.info("doc objects", request.params.docId);
         var _global = {};
-        const session = createSession();
+        const session = createSession(request.params.docId);
         session.open()
             .then(global => {
                 _global = global;
@@ -213,7 +213,7 @@ module.exports = {
     objectId: (request, reply) => {
         logger.info("doc", request.params.docId, "object", request.params.objId);
         var _global = {};
-        const session = createSession();
+        const session = createSession(request.params.docId);
         session.open()
             .then(global => {
                 _global = global;
@@ -244,7 +244,7 @@ module.exports = {
     objectLayout: (request, reply) => {
         logger.info("doc", request.params.docId, "object", request.params.objId, "layout");
         var _global = {};
-        const session = createSession();
+        const session = createSession(request.params.docId);
         session.open()
             .then(global => {
                 _global = global;
@@ -268,7 +268,7 @@ module.exports = {
     objectData: (request, reply) => {
         logger.info("doc", request.params.docId, "object", request.params.objId, "data");
         var _global = {};
-        const session = createSession();
+        const session = createSession(request.params.docId);
         var nxPageToGet = nxPage;
         var w = 1, h = 10000;
         session.open()
@@ -311,7 +311,7 @@ module.exports = {
     objectPivotdata: (request, reply) => {
         logger.info("doc", request.params.docId, "object", request.params.objId, "pivotdata");
         var _global = {};
-        const session = createSession();
+        const session = createSession(request.params.docId);
         var nxPageToGet = nxPage;
         var w = 1, h = 10000;
         session.open()
@@ -354,7 +354,7 @@ module.exports = {
     objectLayers: (request, reply) => {
         logger.info("doc", request.params.docId, "object", request.params.objId, "layers");
         var _global = {};
-        const session = createSession();
+        const session = createSession(request.params.docId);
         session.open()
             .then(global => {
                 _global = global;
@@ -386,7 +386,7 @@ module.exports = {
     hyperCube: (request, reply) => {
         logger.info("doc", request.params.docId, "hypercube");
         var _global = {};
-        const session = createSession();
+        const session = createSession(request.params.docId);
         session.open()
             .then(global => {
                 _global = global;
@@ -422,7 +422,7 @@ module.exports = {
     hyperCubeSize: (request, reply) => {
         logger.info("doc", request.params.docId, "hypercube size");
         var _global = {};
-        const session = createSession();
+        const session = createSession(request.params.docId);
         var res = {};
         session.open()
             .then(global => {
@@ -462,7 +462,7 @@ module.exports = {
     hyperCubeJson: (request, reply) => {
         logger.info("doc", request.params.docId, "hypercube/json");
         var _global = {};
-        const session = createSession();
+        const session = createSession(request.params.docId);
         var w = 0, h = 10000, t = 0, page = 1;
         var nxPageToGet = nxPage;
         if (request.params.hasOwnProperty('pageNo')) {
