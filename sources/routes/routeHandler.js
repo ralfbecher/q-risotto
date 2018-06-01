@@ -2,6 +2,7 @@
 
 const pjson = require('../package.json');
 const utils = require('../util/utils');
+const serializeapp = require('serializeapp');
 const createSession = require('../util/session');
 const log4js = require('log4js');
 const logger = log4js.getLogger();
@@ -202,6 +203,27 @@ module.exports = {
                 reply({
                     qInfos: infos.qInfos || infos
                 });
+            })
+            .catch(error => {
+                console.error('Error occured:', error);
+                reply({error: error.message});
+            });
+    },
+
+    // path: '/v1/doc/{docId}/serialize'
+    serialize: (request, reply) => {
+        logger.info("doc objects", request.params.docId);
+        var _global = {};
+        const session = createSession(request.params.docId);
+        session.open()
+            .then(global => {
+                _global = global;
+                return global.openDoc(request.params.docId, "", "", "", true);
+            })
+            .then(doc => serializeapp(doc))
+            .then(results => {
+                session.close();
+                reply(results);
             })
             .catch(error => {
                 console.error('Error occured:', error);

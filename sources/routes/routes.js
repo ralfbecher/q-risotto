@@ -33,6 +33,11 @@ module.exports.routes = [
     },
     {
         method: 'GET',
+        path: '/v1/doc/{docId}/serialize',
+        handler: routeHandler.serialize
+    },
+    {
+        method: 'GET',
         path: '/v1/doc/{docId}/object/{objId}',
         handler: routeHandler.objectId
     },

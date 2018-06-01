@@ -14,7 +14,9 @@
     "hapi": "16.6.2",
     "inert": "^4.0.2",
     "log4js": "^2.5.2",
+    "promise": "^8.0.1",
     "require-hapiroutes": "^0.1.9",
+    "serializeapp": "^3.0.0",
     "ws": "^3.3.3"
   }
 }

@@ -23,6 +23,8 @@ GET **/v1/doc/{docId}** - app layout, returns getAppLayout().**qLayout**
 
 GET **/v1/doc/{docId}/objects** - all objects of app, returns getAllInfos().**qInfos**
 
+GET **/v1/doc/{docId}/serialize** - serialize a app into a JSON object, more details here: [mindspank/serializeapp](https://github.com/mindspank/serializeapp)
+
 GET **/v1/doc/{docId}/object/{objId}** - object layout, returns getLayout().**qLayout**
 
 GET **/v1/doc/{docId}/object/{objId}/layout** - layout data, returns getLayout().**qLayout** depending on object type it contains qHyperCube and qDataPages
