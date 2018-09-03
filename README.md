@@ -127,6 +127,31 @@ Script=Node\q-risotto\server.js
 
 [q-risotto.parameters]
 ```
+
+### Qlik Core Integration
+
+Adjust ```./src/config/config.json``` to work with the dockerized QIX engine like this:
+
+```
+{
+    "enigmaSchema": "enigma.js/schemas/12.34.11.json",
+    "engineHost": "qix-engine",
+    "enginePort": 9076,
+    "globalAppId": "engineData",
+    "userDirectory": null,
+    "userId": null,
+    "certificatesPath": null,
+    "port": 3000
+}
+```
+
+Use the ```docker-compose.yml``` file provided in the repo and start it:
+
+```
+docker-compose up
+```
+
+
 ### Usage
 
 #### Config

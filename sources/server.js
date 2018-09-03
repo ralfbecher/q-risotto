@@ -19,14 +19,20 @@ server.register(Inert, (err) => {
     }
 });
 
-server.connection({
-    port: config.port,
-    tls: {
-        ca: [config.certificates.ca],
-        key: config.certificates.key,
-        cert: config.certificates.cert
-    }
-});
+if (config.certificatesPath) {
+    server.connection({
+        port: config.port,
+        tls: {
+            ca: [config.certificates.ca],
+            key: config.certificates.key,
+            cert: config.certificates.cert
+        }
+    });
+} else {
+    server.connection({
+        port: config.port
+    });
+}
 
 server.route(routes.routes);
 

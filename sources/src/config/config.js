@@ -9,10 +9,12 @@ const logger = log4js.getLogger();
 
 const readCert = filename => fs.readFileSync(path.resolve(__dirname, config.certificatesPath, filename));
 
-config.certificates = {
-    ca: readCert('root.pem'),
-    key: readCert('client_key.pem'),
-    cert: readCert('client.pem')
+if (config.certificatesPath) {
+    config.certificates = {
+        ca: readCert('root.pem'),
+        key: readCert('client_key.pem'),
+        cert: readCert('client.pem')
+    }    
 }
 
 log4js.configure(log4jsConfig);
