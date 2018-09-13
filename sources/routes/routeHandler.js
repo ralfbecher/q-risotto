@@ -462,7 +462,7 @@ module.exports = {
                             res = {
                                 columns: layout.qHyperCube.qSize.qcx,
                                 rows: layout.qHyperCube.qSize.qcy,
-                                pages: Math.ceil((layout.qHyperCube.qSize.qcx + layout.qHyperCube.qSize.qcy) / 10000)
+                                pages: Math.ceil((layout.qHyperCube.qSize.qcx * layout.qHyperCube.qSize.qcy) / 10000)
                             };
                             return res;
                         } else {
