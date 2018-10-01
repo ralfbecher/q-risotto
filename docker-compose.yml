@@ -2,14 +2,14 @@ version: "3.3"
 
 services:
   licenses:
-    image: qlikcore/licenses:1.0.5
+    image: qlikcore/licenses:1.0.7
     environment:
       - LICENSES_SERIAL_NBR=<your_serial_no>
       - LICENSES_CONTROL_NBR=<your_ctrl_no>
       - LICENSES_LOG_LEVEL=warn
   
   qix:
-    image: qlikcore/engine:12.215.0
+    image: qlikcore/engine:12.225.0
     container_name: qix-engine
     command: -S LockD=65522 -S LicenseServiceUrl=http://licenses:9200 -S DocumentDirectory=/docs -S ExtensionsDirectory=/extensions -S --WsPath /srv --MigrationPort -1  -S AcceptEULA=yes
     volumes:

@@ -1,10 +1,10 @@
 {
-    "enigmaSchema": "enigma.js/schemas/12.34.11.json",
-    "engineHost": "WIN-09USCP1J3QT",
-    "enginePort": 4747,
+    "enigmaSchema": "enigma.js/schemas/12.170.2.json",
+    "engineHost": "qix-engine",
+    "enginePort": 9076,
     "globalAppId": "engineData",
-    "userDirectory": "Internal",
-    "userId": "sa_repository",
-    "certificatesPath": "C:/ProgramData/Qlik/Sense/Repository/Exported Certificates/.Local Certificates",
-    "port": 1338
+    "userDirectory": null,
+    "userId": null,
+    "certificatesPath": null,
+    "port": 3000
 }
