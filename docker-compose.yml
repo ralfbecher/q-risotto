@@ -9,7 +9,7 @@ services:
       - LICENSES_LOG_LEVEL=warn
   
   qix:
-    image: qlikcore/engine:12.225.0
+    image: qlikcore/engine:12.260.0
     container_name: qix-engine
     command: -S LockD=65522 -S LicenseServiceUrl=http://licenses:9200 -S DocumentDirectory=/docs -S ExtensionsDirectory=/extensions -S --WsPath /srv --MigrationPort -1  -S AcceptEULA=yes
     volumes:
