@@ -21,7 +21,7 @@ server.register(Inert, (err) => {
 
 if (config.certificatesPath) {
     server.connection({
-        port: config.port,
+        port: process.env.PORT || config.port,
         tls: {
             ca: [config.certificates.ca],
             key: config.certificates.key,
@@ -30,7 +30,7 @@ if (config.certificatesPath) {
     });
 } else {
     server.connection({
-        port: config.port
+        port: process.env.PORT || config.port
     });
 }
 
