@@ -33,6 +33,7 @@ if (config.certificatesPath) {
         port: process.env.PORT || config.port
     });
 }
+console.log('q-risotto is running on port ' + process.env.PORT || config.port);
 
 server.route(routes.routes);
 
