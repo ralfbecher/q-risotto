@@ -182,13 +182,11 @@ Use q-risotto WDC with Tableau to retrieve data from Qlik Sense:
 
 #### R Integration
 
-Use q-risotto with R and retrieve data from Qlik Sense, there will be an 
-R convenience package soon to wrap q-risotto and complex Qlik structs like qHypoerCubeDef:
-![q-risotto with R](r-example.png)
+Use q-risotto in your R environment and retrieve data from Qlik Sense. Here you will find the R convenience package 'senser' to wrap q-risotto and complex Qlik structs like qHyperCubeDef:
 
-Here you can find an R test script: [test.R](test.R) - which will plot this result:
+[https://github.com/ralfbecher/senser](https://github.com/ralfbecher/senser)
 
-![resulting plot of test.R](test.R-result.png)
+![Using senser R package](senser.R-usage.jpg)
 
 ***
 
