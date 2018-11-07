@@ -16,8 +16,8 @@ module.exports = (appId) => {
       url: `wss://${config.engineHost}:${config.enginePort}/app/${appId}`,
       createSocket: url => new WebSocket(url, {
         ca: [config.certificates.ca],
-        key: config.certificates.key,
-        cert: config.certificates.cert,
+        key: config.certificates.client.key,
+        cert: config.certificates.client.cert,
         headers: {
           'X-Qlik-User': `UserDirectory=${encodeURIComponent(config.userDirectory)}; UserId=${encodeURIComponent(config.userId)}`,
         }

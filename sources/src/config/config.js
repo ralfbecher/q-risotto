@@ -12,8 +12,14 @@ const readCert = filename => fs.readFileSync(path.resolve(__dirname, config.cert
 if (config.certificatesPath) {
     config.certificates = {
         ca: readCert('root.pem'),
-        key: readCert('client_key.pem'),
-        cert: readCert('client.pem')
+        client: {
+            key: readCert('client_key.pem'),
+            cert: readCert('client.pem')
+        },
+        server: {
+            key: readCert('server_key.pem'),
+            cert: readCert('server.pem')
+        }
     }    
 }
 
