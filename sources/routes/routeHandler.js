@@ -568,10 +568,10 @@ module.exports = {
                                                 resVal[names[i]] = null;
                                             } else {
                                                 if (types[i] == fieldTypes.discrete) {
-                                                    if (value.hasOwnProperty('qText')) {
-                                                        resVal[names[i]] = value.qText;
-                                                    } else if (value.hasOwnProperty('qNum')) {
+                                                    if (value.hasOwnProperty('qNum') && !isNaN(value.qNum)) {
                                                         resVal[names[i]] = value.qNum;
+                                                    } else if (value.hasOwnProperty('qText')) {
+                                                        resVal[names[i]] = value.qText;
                                                     } else {
                                                         resVal[names[i]] = "null";
                                                     }
