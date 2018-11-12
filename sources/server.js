@@ -24,8 +24,8 @@ if (config.certificatesPath) {
         port: process.env.PORT || config.port,
         tls: {
             ca: [config.certificates.ca],
-            key: config.certificates.key,
-            cert: config.certificates.cert
+            key: config.certificates.server.key,
+            cert: config.certificates.server.cert
         }
     });
 } else {
