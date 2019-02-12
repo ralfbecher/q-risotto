@@ -127,6 +127,22 @@ Script=Node\q-risotto\server.js
 
 [q-risotto.parameters]
 ```
+### Qlik Sense Server Integration
+
+Adjust ```./src/config/config.json``` to work with a Qlik Sense Server like this:
+
+```
+{
+    "enigmaSchema": "enigma.js/schemas/12.34.11.json",
+    "engineHost": "<your Qlik Sense Server hostname or IP>",
+    "enginePort": 4747,
+    "globalAppId": "engineData",
+    "userDirectory": "Internal",
+    "userId": "sa_repository",
+    "certificatesPath": "C:/ProgramData/Qlik/Sense/Repository/Exported Certificates/.Local Certificates",
+    "port": 3000
+}
+```
 
 ### Qlik Core Integration
 
