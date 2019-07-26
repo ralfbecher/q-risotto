@@ -12,6 +12,9 @@ const logger = log4js.getLogger();
 logger.info("q-risotto started");
 
 const server = new Hapi.Server();
+const port = process.env.PORT || config.port;
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 server.register(Inert, (err) => {
     if (err) {
@@ -21,7 +24,7 @@ server.register(Inert, (err) => {
 
 if (config.certificatesPath) {
     server.connection({
-        port: process.env.PORT || config.port,
+        port: port,
         tls: {
             ca: [config.certificates.ca],
             key: config.certificates.server.key,
@@ -30,10 +33,10 @@ if (config.certificatesPath) {
     });
 } else {
     server.connection({
-        port: process.env.PORT || config.port
+        port: config.port
     });
 }
-console.log('q-risotto is running on port ' + process.env.PORT || config.port);
+console.log('q-risotto is running on port ' + port);
 
 server.route(routes.routes);
 
