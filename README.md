@@ -6,12 +6,13 @@ Inspired by project [chartcacher] by [Alexander Karlsson].
 
 [chartcacher]: https://github.com/mindspank/chartcacher
 [Alexander Karlsson]: https://github.com/mindspank
+[TIQ Solutions]: https://www.tiq-solutions.de
 
 ![q-risotto](./q-risotto-logo.png)
 
 The intention was to provide an easy access to apps, objects and its data on a Qlik Sense server thru a REST API to integrate with other systems.
 
-The development state of this API is at the very beginning and highly incomplete, so more or less raw and unground. But see yourself.
+We at [TIQ Solutions] do provide a support and maintenance subscription for this project and also customization. There is also a commercial version on it's way having more endpoints and authentication.
 
 ### Endpoints
 
